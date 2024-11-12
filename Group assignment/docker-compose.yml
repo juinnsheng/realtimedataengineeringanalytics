@@ -1,0 +1,240 @@
+volumes:
+  metadata_data: {}
+  middle_var: {}
+  historical_var: {}
+  broker_var: {}
+  coordinator_var: {}
+  router_var: {}
+  druid_shared: {}
+  superset_home: {}
+
+services:
+  zookeeper:
+    image: zookeeper:3.9
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      - ZOO_MY_ID=1
+    healthcheck:
+      test: ['CMD', 'bash', '-c', "echo 'ruok' | nc localhost 2181"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - default
+
+  kafka-controller:
+    image: apache/kafka:3.8.1
+    container_name: kafka-controller
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: controller
+      KAFKA_LISTENERS: CONTROLLER://kafka-controller:9093
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_CONTROLLER_QUORUM_VOTERS: "1@kafka-controller:9093,2@kafka-controller-2:9093"
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    networks:
+      - default
+
+  kafka-controller-2:
+    image: apache/kafka:3.8.1
+    container_name: kafka-controller-2
+    environment:
+      KAFKA_NODE_ID: 2
+      KAFKA_PROCESS_ROLES: controller
+      KAFKA_LISTENERS: CONTROLLER://kafka-controller-2:9093
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_CONTROLLER_QUORUM_VOTERS: "1@kafka-controller:9093,2@kafka-controller-2:9093"
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    networks:
+      - default
+
+  kafka_broker:
+    image: apache/kafka:3.8.1
+    container_name: kafka_broker
+    platform: linux/amd64
+    ports:
+      - "29092:9092"  # Exposing external port for clients on the host
+    environment:
+      KAFKA_NODE_ID: 3
+      KAFKA_PROCESS_ROLES: broker
+      KAFKA_LISTENERS: "PLAINTEXT://0.0.0.0:19092,PLAINTEXT_HOST://0.0.0.0:9092"
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://kafka_broker:19092,PLAINTEXT_HOST://localhost:29092"
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT"
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_CONTROLLER_QUORUM_VOTERS: "1@kafka-controller:9093,2@kafka-controller-2:9093"
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    depends_on:
+      - kafka-controller
+      - kafka-controller-2
+    networks:
+      - default
+    volumes:
+      - broker_var:/opt/kafka/data  # Correct volume mount for Kafka data
+
+  kafka_broker_1:
+    image: apache/kafka:3.8.1
+    container_name: kafka_broker_1
+    platform: linux/amd64
+    ports:
+      - "39092:9092"
+    environment:
+      KAFKA_NODE_ID: 4
+      KAFKA_PROCESS_ROLES: broker
+      KAFKA_LISTENERS: "PLAINTEXT://0.0.0.0:19092,PLAINTEXT_HOST://0.0.0.0:9092"
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://kafka_broker_1:19092,PLAINTEXT_HOST://localhost:39092"
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT"
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_CONTROLLER_QUORUM_VOTERS: "1@kafka-controller:9093,2@kafka-controller-2:9093"
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    depends_on:
+      - kafka-controller
+      - kafka-controller-2
+    networks:
+      - default
+    volumes:
+      - broker_var:/opt/kafka/data  # Correct volume mount for Kafka data
+
+  postgres:
+    container_name: postgres
+    image: postgres:16.0
+    ports:
+      - "5432:5432"
+    volumes:
+      - metadata_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=SuperStrongPassword
+      - POSTGRES_USER=druid
+      - POSTGRES_DB=druid
+
+  coordinator:
+    image: apache/druid:31.0.0
+    container_name: coordinator
+    volumes:
+      - druid_shared:/opt/shared
+      - coordinator_var:/opt/druid/var
+    depends_on:
+      - zookeeper
+      - postgres
+    ports:
+      - "8081:8081"
+    command:
+      - coordinator
+    env_file:
+      - environment
+    networks:
+      - default
+
+  broker:
+    image: apache/druid:31.0.0
+    container_name: broker
+    platform: linux/amd64
+    volumes:
+      - broker_var:/opt/druid/var
+    depends_on:
+      - zookeeper
+      - postgres
+      - coordinator
+    ports:
+      - "8082:8082"
+    command:
+      - broker
+    env_file:
+      - environment
+    networks:
+      - default
+
+  historical:
+    image: apache/druid:31.0.0
+    container_name: historical
+    platform: linux/amd64
+    volumes:
+      - druid_shared:/opt/shared
+      - historical_var:/opt/druid/var
+    depends_on:
+      - zookeeper
+      - postgres
+      - coordinator
+    ports:
+      - "8083:8083"
+    command:
+      - historical
+    env_file:
+      - environment
+    networks:
+      - default
+
+  middlemanager:
+    image: apache/druid:31.0.0
+    container_name: middlemanager
+    platform: linux/amd64
+    volumes:
+      - druid_shared:/opt/shared
+      - middle_var:/opt/druid/var
+    depends_on:
+      - zookeeper
+      - postgres
+      - coordinator
+    ports:
+      - "8091:8091"
+      - "8100-8105:8100-8105"
+    command:
+      - middleManager
+    env_file:
+      - environment
+    networks:
+      - default
+
+  router:
+    image: apache/druid:31.0.0
+    container_name: router
+    platform: linux/amd64
+    volumes:
+      - router_var:/opt/druid/vars
+    depends_on:
+      - zookeeper
+      - postgres
+      - coordinator
+    ports:
+      - "8888:8888"
+    command:
+      - router
+    env_file:
+      - environment
+    networks:
+      - default
+
+  superset:
+    image: apache/superset:latest
+    container_name: superset
+    environment:
+      - SUPERSET_SECRET_KEY=supersecretkey  # Replace with a strong key
+      - ADMIN_USERNAME=user
+      - ADMIN_PASSWORD=333666          # Change for security
+      - ADMIN_EMAIL=admin@example.com
+    ports:
+      - "8088:8088"  # Superset UI
+    volumes:
+      - superset_home:/app
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        superset fab create-admin --username user --firstname Superset --lastname Admin --email admin@example.com --password 333666 &&
+        superset db upgrade &&
+        superset load_examples &&
+        superset init &&
+        /usr/bin/run-server.sh
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge
