@@ -42,7 +42,7 @@ If you got a 8 GB laptop and below: run containers separately via Docker Desktop
 docker stop <container_name_or_id>
 ```
 
-You may be prompted to login in terminal to pull docker image for druid-exporter (https://github.com/opstree/druid-exporter). You may face an error if you pull the image directly.
+You may be prompted to login in terminal to pull docker image for druid-exporter (https://github.com/opstree/druid-exporter). You may face an error if you pull the image directly. Sign in with your docker hub (https://hub.docker.com) and login with your username and password. Your images will be downloaded after sign in. Please don’t confuse your Docker Desktop acc and Docker Hub acc. Here we use Docker Hub acc to login
 
 ```bash
 docker login
@@ -50,10 +50,7 @@ username
 password
 ```
 
-Sign in with your docker hub (https://hub.docker.com) and login with your username and password
-Your images will be downloaded after sign in. Please don’t confuse your Docker Desktop acc and Docker Hub acc. Here we use Docker Hub acc
-
-Use command below to check the running containers
+Use command below to check all the running containers
 
 ```bash
 docker-ps 
