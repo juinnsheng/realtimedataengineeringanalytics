@@ -1,3 +1,6 @@
+# Big Data Applications and Analytics Group Assignment
+- Pipeline development (End-to-end Data Engineering Pipeline)
+
 ### Setup for Mac OS user
 
 ```bash
