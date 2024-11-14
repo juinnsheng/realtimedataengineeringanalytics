@@ -10,6 +10,8 @@ volumes:
   superset_home: {}
   grafana_storage: {}
   prometheus-storage: {}
+ 
+
 
 
 services:
@@ -236,25 +238,6 @@ services:
         superset load_examples &&
         superset init &&
         /usr/bin/run-server.sh
-    networks:
-      - default
-
-  
-  overlord:
-    image: apache/druid:31.0.0
-    container_name: overlord
-    volumes:
-      - overlord_var:/opt/druid/var
-    depends_on:
-      - zookeeper
-      - postgres
-      - coordinator
-    ports:
-      - "8093:8081"
-    command:
-      - overlord
-    env_file:
-      - environment
     networks:
       - default
 
