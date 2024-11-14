@@ -57,7 +57,7 @@ In MacOS and VS Code:
 source .venv/bin/activate
 python Producer.py
 ```
-## IMPORTANT: Please ensure your Producer’s topic is tally to your Kafka commands. If it is ecommerce9, then ecommerce9**
+IMPORTANT: Please ensure your Producer’s topic is tally to your Kafka commands. If it is ecommerce9, then ecommerce9
 
 Your data will be ingested into consumer.
 
