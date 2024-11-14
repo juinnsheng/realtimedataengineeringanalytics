@@ -36,7 +36,14 @@ Please wait for a few minutes for all containers to run. If you are running on 8
 
 If you got a 8 GB laptop and below: run this and shut down a few containers like Superset, Grafana or Prometheus depending on your situation.
 
-You may be prompted to login in terminal to pull docker image for druid-exporter (https://github.com/opstree/druid-exporter)
+You may be prompted to login in terminal to pull docker image for druid-exporter (https://github.com/opstree/druid-exporter). You may face an error if you pull the image directly.
+
+```bash
+docker login
+username
+password
+```
+
 Sign in with your docker hub (https://hub.docker.com) and login with your username and password
 Your images will be downloaded after sign in. Please don’t confuse your Docker Desktop acc and Docker Hub acc. Here we use Docker Hub acc
 
