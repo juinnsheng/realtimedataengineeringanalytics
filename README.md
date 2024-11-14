@@ -74,6 +74,7 @@ localhost:9090/targets -> If it is druid exporter is up, then it is good
 localhost:3000 -> Grafana
 localhost:8088 -> Superset
 
+```bash
 Login to Superset:
 USERNAME=user
 PASSWORD=333666
@@ -81,6 +82,7 @@ PASSWORD=333666
 Login-in to Grafana
 USERNAME=user
 PASSWORD:SomePassword
+```
 
 Druid -> Ingest Data based on kafka_broker:19092 and the data will be ingested. If any processes failed, please run Druid Doctor and check if any of your Druid containers like Historical, Broker, Router etc are down. Usually it is related to your RAM. Your Docker may ran out of RAM to process and ingest data
 
