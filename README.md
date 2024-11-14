@@ -67,13 +67,13 @@ IMPORTANT: Please ensure your Producer’s topic is tally to your Kafka commands
 
 Your data will be ingested into consumer.
 
-Navigate to 
+## Navigate to 
 
-localhost:8888 -> Druid
-localhost:9090 -> prometheus (You won’t see anything but important point is below)
-localhost:9090/targets -> If it is druid exporter is up, then it is good
-localhost:3000 -> Grafana
-localhost:8088 -> Superset
+- localhost:8888 -> Druid
+- localhost:9090 -> prometheus (You won’t see anything but important point is below)
+- localhost:9090/targets -> If it is druid exporter is up, then it is good
+- localhost:3000 -> Grafana
+- localhost:8088 -> Superset
 
 
 
