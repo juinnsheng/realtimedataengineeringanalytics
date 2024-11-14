@@ -34,7 +34,11 @@ docker-compose up -d
 
 Please wait for a few minutes for all containers to run. If you are running on 8 GB RAM Laptop and below, please don’t attempt to run all these containers all at once. Begin running the Kakfa, Druid and Superset containers. Then, ran Druid, Grafana and Prometheus containers separately. Although we cannot really measure the query performances directly, we can upload data locally to Druid or we can run some test data queries to show on Grafana dashboard.
 
-If you got a 8 GB laptop and below: run this and shut down a few containers like Superset, Grafana or Prometheus depending on your situation.
+If you got a 8 GB laptop and below: run containers separately via Docker Desktop and or run this command shut down a few containers like Superset, Grafana or Prometheus depending on your situation.
+
+```bash
+docker stop <container_name_or_id>
+```
 
 You may be prompted to login in terminal to pull docker image for druid-exporter (https://github.com/opstree/druid-exporter). You may face an error if you pull the image directly.
 
