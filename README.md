@@ -11,7 +11,7 @@ Once sign up, login to Docker Desktop
 Go to Settings (upper right) -> Resources -> Advanced -> Memory Limit: 7.5 GB (As many as your laptop can go, as Druid needs a minimum of 6GB RAM to run or else you will experience 137 error, or the historical and broker containers will shut down by itself)
 **IMPORTANT: Go to Network -> Set Enable host networking to be true (Port forwarding purposes. This is because Docker containers run in isolated to each other, meaning they are not directly linked from host machine. Port forwarding is used to link each of the container ports to your local host — in simpler terms, if you don’t enable this, you cannot access any localhost ports from the docker). Read this for further knowledge(https://docs.docker.com/engine/network/tutorials/standalone/) also this (https://docs.docker.com/engine/network/tutorials/host/) to further understand how docker networking works**
 
-### Setup Druid environment**
+### Setup Druid environment
 1. Obtained from (https://github.com/apache/druid/blob/master/distribution/docker/environment)
 2. Modify accordingly to your setup
 3. If you want to emit more metrics, kindly refer to https://druid.apache.org/docs/latest/operations/metrics/ and add in the environment file. The metrics will be emitted via http to prometheus and we can query in Grafana for a neater visualization
@@ -38,7 +38,7 @@ Use command below to check the running containers
 docker-ps 
 ```
 
-##How to Run Apache Kafka?
+## How to Run Apache Kafka?
 
 Apache Kafka has a few important components including ZooKeeper, Producer and Consumer. Zookeeper must be ran and be healthy in order for Kafka to operate smoothly. Producer produces the data which will be ingested to consumer. Dr. Riyaz may cover in the later of the course
 
