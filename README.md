@@ -34,7 +34,7 @@ docker-compose up -d
 
 Please wait for a few minutes for all containers to run. If you are running on 8 GB RAM Laptop and below, please don’t attempt to run all these containers all at once. Begin running the Kakfa, Druid and Superset containers. Then, ran Druid, Grafana and Prometheus containers separately. Although we cannot really measure the query performances directly, we can upload data locally to Druid or we can run some test data queries to show on Grafana dashboard.
 
-If you got a 8 GB laptop and below: run containers separately via Docker Desktop and or run this command shut down a few containers like Superset, Grafana or Prometheus depending on your situation.
+If you got a 8 GB laptop and below: run containers separately via Docker Desktop and or run this command to shut down a few containers like Superset, Grafana or Prometheus depending on your situation.
 
 ```bash
 docker stop <container_name_or_id>
@@ -106,8 +106,7 @@ Druid -> Ingest Data based on kafka_broker:19092 and the data will be ingested. 
 Grafana: Dashboard is found in Manage Dashboard section on your left. Druid dashboard will appear
 How to add more monitoring metrics:
 
-Set data to default. Query your metrics according using this command for example:
-
 ```bash
+#Set data to default. Query your metrics according using this command for example:
 druid_emitted_metrics{metric_name="query-cpu-time”, services="broker”}
 ```
