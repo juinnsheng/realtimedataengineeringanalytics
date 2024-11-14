@@ -11,7 +11,7 @@ export DOCKER_DEFAULT_PLATFORM=linux/amd64
 source ~/.zshrc
 ```
 ### Download Docker Desktop 
-Sign up an account in both Docker Hub (https://hub.docker.com) and Docker Desktop
+Sign up an account in both Docker Hub (https://hub.docker.com) and Docker Desktop (https://www.docker.com/products/docker-desktop/)
 
 Once sign up, login to Docker Desktop
 
