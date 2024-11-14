@@ -3,9 +3,11 @@
 
 Setup for Mac OS user
 
+```bash
 nano ~/.zshrc
 export DOCKER_DEFAULT_PLATFORM=linux/amd64
 source ~/.zshrc
+
 
 *Download Docker Desktop**
 Sign up an account in both Docker Hub (https://hub.docker.com) and Docker Desktop
