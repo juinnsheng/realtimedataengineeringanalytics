@@ -25,7 +25,7 @@ def generate_data():
 
 # Main function to send data to Kafka
 if __name__ == '__main__':
-    topic_name = 'ecommerce7'
+    topic_name = 'ecommerce10'
     producer = KafkaProducer(
         bootstrap_servers = ['localhost:29092', 'localhost:39092'],
         api_version=(3,8,1),
