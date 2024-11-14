@@ -2,7 +2,6 @@
 
 
 Setup for Mac OS user
-
 ```bash
 nano ~/.zshrc
 export DOCKER_DEFAULT_PLATFORM=linux/amd64
@@ -23,7 +22,7 @@ Setup Druid environment
 Once all these is setup:
 
 Run this if you got a powerful laptop:
-
+```bash
 docker-compose up -d
 
 Please wait for a few minutes for all containers to run. If you are running on 8 GB RAM Laptop and below, please don’t attempt to run all these containers all at once. Begin running the Kakfa, Druid and Superset containers. Then, ran Druid, Grafana and Prometheus containers separately. Although we cannot really measure the query performances directly, we can upload data locally to Druid or we can run some test data queries to show on Grafana dashboard.
@@ -36,7 +35,7 @@ Your images will be downloaded after sign in. Please don’t confuse your Docker
 
 Use command below to check the running containers
 
-
+```bash
 docker-ps 
 
 How to Run Apache Kafka?
@@ -44,14 +43,14 @@ How to Run Apache Kafka?
 Apache Kafka has a few important components including ZooKeeper, Producer and Consumer. Zookeeper must be ran and be healthy in order for Kafka to operate smoothly. Producer produces the data which will be ingested to consumer. Dr. Riyaz may cover in the later of the course
 
 Below is the list of commands to ingest data into Kafka:
-
+```bash
 docker exec --workdir /opt/kafka/bin/ -it kafka_broker sh
 ./kafka-topics.sh --bootstrap-server kafka_broker:19092,kafka_broker_1:19092 --create --topic ecommerce9
 ./kafka-console-consumer.sh --bootstrap-server kafka_broker:19092,kafka_broker_1:19092 --topic ecommerce9 —from-beginning --partition 0
 
 Then activate virtual environment and ran your Python Producer
 In MacOS and VS Code:
-
+```python
 source .venv/bin/activate
 python Producer.py
 
