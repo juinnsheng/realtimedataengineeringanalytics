@@ -62,6 +62,7 @@ In MacOS and VS Code:
 source .venv/bin/activate
 python Producer.py
 ```
+
 IMPORTANT: Please ensure your Producer’s topic is tally to your Kafka commands. If it is ecommerce9, then ecommerce9
 
 Your data will be ingested into consumer.
@@ -73,6 +74,8 @@ localhost:9090 -> prometheus (You won’t see anything but important point is be
 localhost:9090/targets -> If it is druid exporter is up, then it is good
 localhost:3000 -> Grafana
 localhost:8088 -> Superset
+
+
 
 ```bash
 Login to Superset:
