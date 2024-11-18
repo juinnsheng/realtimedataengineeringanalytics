@@ -1,5 +1,7 @@
 # Big Data Applications and Analytics Group Assignment
 - Pipeline development (End-to-end Data Engineering Pipeline)
+- 
+What's the point of this project when Dr wants it to be cloud-based instead? I spent so much time figuring out and putting this all up together and I cannot use this. So I am basically throwing this pipeline away. I give up, there is no point of being too hardworking. I should just chill and relax
 
 ![Image](Architecture.png)
 
