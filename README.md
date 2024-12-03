@@ -1,6 +1,9 @@
 # Real Time Data Engineering Pipeline
 - Pipeline development (End-to-end Data Engineering Pipeline)
 
+This project was prepared in advanced for WQD7009 but it is no longer applicable as Dr requires a cloud-based implementation instead. 
+However, this still serves as a good practice for me to understand about container orchestration basics before diving into cloud computing and Kubernetes.
+
 ![Image](Architecture.png)
 
 ### Setup for Mac OS user
