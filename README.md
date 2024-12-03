@@ -96,9 +96,7 @@ Your data will be ingested into consumer.
 
 
 ```bash
-Login to Superset:
-USERNAME=user
-PASSWORD=333666
+
 
 Login-in to Grafana
 USERNAME=user
