@@ -1,8 +1,6 @@
 # Real Time Data Engineering Pipeline
 - Pipeline development (End-to-end Data Engineering Pipeline)
 
-This project was prepared in advanced for WQD7009 but it is no longer applicable as Dr requires a cloud-based implementation instead. 
-However, this still serves as a good practice for me to understand about container orchestration basics before diving into cloud computing and Kubernetes.
 
 ![Image](Architecture.png)
 
@@ -63,7 +61,7 @@ docker-ps
 
 ## How to Run Apache Kafka?
 
-Apache Kafka has a few important components including ZooKeeper, Producer and Consumer. Zookeeper must be ran and be healthy in order for Kafka to operate smoothly. Producer produces the data which will be ingested to consumer. Dr. Riyaz may cover further in the later of the course
+Apache Kafka has a few important components including ZooKeeper, Producer and Consumer. Zookeeper must be ran and be healthy in order for Kafka to operate smoothly. Producer produces the data which will be ingested to consumer. 
 
 Below is the list of commands to ingest data into Kafka:
 
